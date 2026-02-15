@@ -1,0 +1,18 @@
+{
+  "name": "lab-console",
+  "version": "1.0.0",
+  "description": "",
+  "license": "MIT",
+  "author": "Shigeki Shoji",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.985.0",
+    "@aws-sdk/client-sts": "^3.985.0",
+    "@aws-sdk/lib-dynamodb": "^3.985.0",
+    "jose": "^6.1.3"
+  }
+}
