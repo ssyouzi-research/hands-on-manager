@@ -12,8 +12,9 @@ import TableRow from '@mui/material/TableRow';
 import Button from '@mui/material/Button';
 
 interface User {
-  email: string,
-  rolearn: string
+  'email': string,
+  'rolearn': string,
+  'name': string
 }
 
 export default function Home() {
@@ -46,7 +47,7 @@ export default function Home() {
       <Table sx={{ width: 640 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>メールアドレス</TableCell>
+            <TableCell>ニックネーム</TableCell>
             <TableCell align="center">コンソール</TableCell>
             <TableCell align="center">準備</TableCell>
             <TableCell align="center">削除</TableCell>
@@ -59,7 +60,7 @@ export default function Home() {
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell>
-                {user.email}
+                {user.name}
               </TableCell>
               <TableCell align="center"><Button variant="contained" onClick={() => { handle_click_console(user.rolearn)}}>コンソール</Button></TableCell>
               <TableCell align="center"><Button variant="contained" onClick={() => { handle_click_console(user.rolearn)}}>準備</Button></TableCell>
