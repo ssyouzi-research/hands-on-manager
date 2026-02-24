@@ -144,39 +144,6 @@ Resources:
           Projection:
             ProjectionType: ALL
 
-  CognitoIdentityProvider:
-    Type: AWS::IAM::OIDCProvider
-    Properties:
-      Url: !Sub https://cognito-idp.${AWS::Region}.amazonaws.com/${UserPool}
-      ClientIdList:
-        - !Ref UserPoolClient
-
-  AdminRole:
-    Type: AWS::IAM::Role
-    Properties:
-      RoleName: !Sub ${AWS::StackName}-admin-role
-      AssumeRolePolicyDocument: !Sub >
-        {
-          "Version": "2012-10-17",
-          "Statement": [
-            {
-              "Effect": "Allow",
-              "Principal":
-                {
-                  "Federated": "${CognitoIdentityProvider}"
-                },
-              "Action": "sts:AssumeRoleWithWebIdentity",
-              "Condition": {
-                "StringEquals": {
-                  "cognito-idp.${AWS::Region}.amazonaws.com/${UserPool}:aud": "${UserPoolClient}"
-                }
-              }
-            }
-          ]
-        }
-      ManagedPolicyArns:
-        - arn:aws:iam::aws:policy/AdministratorAccess
-
   WebsiteBucket:
     Type: AWS::S3::Bucket
     Properties:
@@ -293,10 +260,6 @@ Outputs:
   JwksUrl:
     Description: Cognito JWKS URL for token verification
     Value: !Sub https://cognito-idp.${AWS::Region}.amazonaws.com/${UserPool}/.well-known/jwks.json
-
-  AdminRoleArn:
-    Description: Admin Role ARN
-    Value: !GetAtt AdminRole.Arn
 
   WebsiteBucketName:
     Description: S3 Bucket Name for Website
