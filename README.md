@@ -34,3 +34,11 @@ export default nextConfig;
 ```
 pnpm add @mui/material @emotion/react @emotion/styled @mui/material-nextjs @emotion/cache @mui/icons-material
 ```
+
+```
+sam deploy --guided
+```
+
+```
+./deploy.sh <STACK NAME>
+```
