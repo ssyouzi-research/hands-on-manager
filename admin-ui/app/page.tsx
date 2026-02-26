@@ -49,8 +49,6 @@ export default function Home() {
           <TableRow>
             <TableCell>ニックネーム</TableCell>
             <TableCell align="center">コンソール</TableCell>
-            <TableCell align="center">準備</TableCell>
-            <TableCell align="center">削除</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -63,8 +61,6 @@ export default function Home() {
                 {user.name}
               </TableCell>
               <TableCell align="center"><Button variant="contained" onClick={() => { handle_click_console(user.rolearn)}}>コンソール</Button></TableCell>
-              <TableCell align="center"><Button variant="contained" onClick={() => { handle_click_console(user.rolearn)}}>準備</Button></TableCell>
-              <TableCell align="center"><Button variant="contained" onClick={() => { handle_click_console(user.rolearn)}}>削除</Button></TableCell>
             </TableRow>
           ))}
         </TableBody>
