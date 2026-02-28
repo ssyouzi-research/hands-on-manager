@@ -1,0 +1,70 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'sdv-role'
+
+Parameters:
+  UserPools:
+    Type: String
+    Default: 'USER_POOL_ID'
+    Description: Cognito user pools ID (leave empty to create new)
+
+  UserPoolsClient:
+    Type: String
+    Default: 'POOL_CLIENT_ID'
+    Description: Cognito user pools Client ID (leave empty to create new)
+
+Resources:
+  CognitoUserpoolsProvider:
+    Type: AWS::IAM::OIDCProvider
+    Properties:
+      Url: !Sub https://cognito-idp.${AWS::Region}.amazonaws.com/${UserPools}
+      ClientIdList:
+        - !Ref UserPoolsClient
+
+  AdminRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub ${AWS::StackName}-admin
+      AssumeRolePolicyDocument: !Sub >
+            {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Principal":
+                    {
+                      "Federated": "${CognitoUserpoolsProvider}"
+                    },
+                  "Action": "sts:AssumeRoleWithWebIdentity",
+                  "Condition": {
+                    "StringEquals": {
+                      "cognito-idp.${AWS::Region}.amazonaws.com/${UserPools}:aud": "${UserPoolsClient}"
+                    }
+                  }
+                }
+              ]
+            }
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AdministratorAccess
+
+Outputs:
+  OIDCProviderArn:
+    Description: ARN of the Cognito user pools Provider
+    Value: !Ref CognitoUserpoolsProvider
+    Export:
+      Name: !Sub ${AWS::StackName}-oidc-provider-arn
+  
+  UserPools:
+    Description: Cognito user pools ID
+    Value: !Ref UserPools
+    Export:
+      Name: !Sub ${AWS::StackName}-userpools-id
+
+  UserPoolClient:
+    Description: Audience
+    Value: !Ref UserPoolsClient
+    Export:
+      Name: !Sub ${AWS::StackName}-aud
+
+  AdminRoleArn:
+    Description: ARN of the admin role
+    Value: !GetAtt AdminRole.Arn
