@@ -60,7 +60,7 @@ export default function Home() {
               <TableCell>
                 {user.name}
               </TableCell>
-              <TableCell align="center"><Button variant="contained" onClick={() => { handle_click_console(user.rolearn)}}>コンソール</Button></TableCell>
+              <TableCell align="center"><Button variant="contained" onClick={() => { handle_click_console(user.rolearn)}}>{ user.rolearn.split(':')[4] || 'コンソール' }</Button></TableCell>
             </TableRow>
           ))}
         </TableBody>
