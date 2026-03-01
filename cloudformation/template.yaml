@@ -23,7 +23,7 @@ Resources:
   AdminRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: !Sub ${AWS::StackName}-admin
+      RoleName: management-admin-role
       AssumeRolePolicyDocument: !Sub >
             {
               "Version": "2012-10-17",
